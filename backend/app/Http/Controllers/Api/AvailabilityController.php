@@ -7,11 +7,13 @@ use App\Models\Availability;
 use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AvailabilityController extends Controller
 {
     public function index(Request $request)
     {
+        Log::info($request->all());
         $request->validate([
             'date' => 'required|date_format:Y-m-d',
             // you could also later support ?user_id=

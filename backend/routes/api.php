@@ -16,3 +16,8 @@ Route::post('/bookings', [BookingController::class, 'store']);
 // (optional admin)
 Route::get('/admin/availability', [AvailabilityController::class, 'listForAdmin']);
 Route::post('/admin/availability', [AvailabilityController::class, 'store']);
+
+Route::get("/admin/weekly", [AdminAvailabilityController::class, "index"]);
+Route::post("/admin/weekly/save", [AdminAvailabilityController::class, "save"]);
+Route::delete("/admin/weekly/{id}", [AdminAvailabilityController::class, "delete"]);
+
