@@ -1,0 +1,280 @@
+/* Calendly-style Authentication Pages */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* LOGIN PAGE - Centered Layout */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafb;
+  padding: 40px 20px;
+}
+
+.auth-page .auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.auth-page .auth-card h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #0d3b5c;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* REGISTER PAGE - Split Layout */
+.auth-split {
+  display: flex;
+  min-height: 100vh;
+}
+
+.auth-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 40px;
+}
+
+.auth-right {
+  flex: 1;
+  background: #f8fafb;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-split .auth-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.auth-split .auth-card h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #0d3b5c;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+/* Typography */
+.auth-subtitle {
+  font-size: 16px;
+  color: #6b7c93;
+  margin-bottom: 32px;
+}
+
+/* Inputs */
+.auth-card input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid #d1dbe5;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.auth-card input:focus {
+  border-color: #006bff;
+}
+
+.auth-card input:disabled {
+  background: #f1f5f9;
+  color: #6b7c93;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #006bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.primary-btn:hover {
+  background: #0056d9;
+}
+
+.primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  margin: 24px 0;
+  color: #6b7c93;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* OAuth Buttons */
+.oauth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0d3b5c;
+  background: #ffffff;
+  border: 1px solid #d1dbe5;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.oauth-btn:hover {
+  background: #f8fafb;
+}
+
+/* Error Messages */
+.auth-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Footer */
+.auth-footer {
+  font-size: 15px;
+  color: #0d3b5c;
+  margin-top: 24px;
+}
+
+.auth-page .auth-footer {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.auth-footer a {
+  color: #006bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Right Panel - Marketing */
+.pill {
+  display: inline-block;
+  background: #e6f0ff;
+  color: #006bff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.auth-right h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #0d3b5c;
+  line-height: 1.3;
+  margin-bottom: 32px;
+}
+
+.auth-right ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.auth-right li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #516f90;
+}
+
+.auth-right li::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.667 5L7.5 14.167 3.333 10' stroke='%23006bff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  flex-shrink: 0;
+}
+
+.company-logos {
+  font-size: 13px;
+  color: #97a8ba;
+  margin-top: 48px;
+  margin-bottom: 24px;
+}
+
+.logos-container {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  opacity: 0.6;
+}
+
+.logos-container span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #516f90;
+}
+
+.calendar-note {
+  font-size: 14px;
+  color: #6b7c93;
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .auth-split {
+    flex-direction: column;
+  }
+  
+  .auth-right {
+    padding: 40px;
+  }
+}
