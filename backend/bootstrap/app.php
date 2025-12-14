@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Middleware\HandleCors;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,7 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Enable CORS globally
+        $middleware->append(HandleCors::class);
+
+        $middleware->statefulApi();
+        // Sanctum for SPA support
+        $middleware->web(\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
