@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 import api, { setAuthToken } from "../api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
+  
+  // Form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   async function submit(e) {
     e.preventDefault();
     setErrors({});
-    setLoading(true);
-
-    // Frontend validation
+    
+    // Validation
     const newErrors = {};
     if (!name.trim()) newErrors.name = "Name is required";
     if (!email.trim()) newErrors.email = "Email is required";
-    if (!password || password.length < 6)
+    if (!password || password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
-
-    if (Object.keys(newErrors).length) {
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setLoading(false);
       return;
     }
+
+    setLoading(true);
 
     try {
       const res = await api.post("/register", {
@@ -35,14 +38,21 @@ export default function Register() {
         password,
       });
 
+      // Save token
       setAuthToken(res.data.token);
-      window.location.href = "/login";
+      
+      // Redirect to dashboard
+      navigate("/dashboard");
 
     } catch (err) {
-      if (err.response?.status === 422) {
-        setErrors(err.response.data.errors || {});
+      console.error('Registration error:', err);
+      if (err.response?.data?.errors) {
+        // Laravel validation errors
+        setErrors(err.response.data.errors);
+      } else if (err.response?.data?.message) {
+        setErrors({ general: err.response.data.message });
       } else {
-        setErrors({ general: "Registration failed. Try again." });
+        setErrors({ general: "Registration failed. Please try again." });
       }
     } finally {
       setLoading(false);
@@ -111,10 +121,12 @@ export default function Register() {
                 boxSizing: 'border-box',
                 outline: 'none'
               }}
+              onFocus={(e) => e.target.style.borderColor = '#006bff'}
+              onBlur={(e) => e.target.style.borderColor = '#d1dbe5'}
             />
             {errors.name && (
               <span style={{ color: '#dc2626', fontSize: '13px', display: 'block', marginBottom: '12px' }}>
-                {errors.name}
+                {Array.isArray(errors.name) ? errors.name[0] : errors.name}
               </span>
             )}
 
@@ -133,10 +145,12 @@ export default function Register() {
                 boxSizing: 'border-box',
                 outline: 'none'
               }}
+              onFocus={(e) => e.target.style.borderColor = '#006bff'}
+              onBlur={(e) => e.target.style.borderColor = '#d1dbe5'}
             />
             {errors.email && (
               <span style={{ color: '#dc2626', fontSize: '13px', display: 'block', marginBottom: '12px' }}>
-                {errors.email}
+                {Array.isArray(errors.email) ? errors.email[0] : errors.email}
               </span>
             )}
 
@@ -155,10 +169,12 @@ export default function Register() {
                 boxSizing: 'border-box',
                 outline: 'none'
               }}
+              onFocus={(e) => e.target.style.borderColor = '#006bff'}
+              onBlur={(e) => e.target.style.borderColor = '#d1dbe5'}
             />
             {errors.password && (
               <span style={{ color: '#dc2626', fontSize: '13px', display: 'block', marginBottom: '12px' }}>
-                {errors.password}
+                {Array.isArray(errors.password) ? errors.password[0] : errors.password}
               </span>
             )}
 
@@ -171,12 +187,18 @@ export default function Register() {
                 fontSize: '16px',
                 fontWeight: '600',
                 color: '#ffffff',
-                background: '#006bff',
+                background: loading ? '#9ca3af' : '#006bff',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: loading ? 'not-allowed' : 'pointer',
                 marginTop: '8px',
-                opacity: loading ? 0.7 : 1
+                transition: 'background 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) e.target.style.background = '#0056d2';
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.target.style.background = '#006bff';
               }}
             >
               {loading ? "Creating account..." : "Continue with email"}
@@ -210,8 +232,11 @@ export default function Register() {
               borderRadius: '8px',
               textDecoration: 'none',
               marginBottom: '12px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              transition: 'border-color 0.2s'
             }}
+            onMouseEnter={(e) => e.target.style.borderColor = '#006bff'}
+            onMouseLeave={(e) => e.target.style.borderColor = '#d1dbe5'}
           >
             <svg width="18" height="18" viewBox="0 0 18 18">
               <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
@@ -238,8 +263,11 @@ export default function Register() {
               border: '1px solid #d1dbe5',
               borderRadius: '8px',
               textDecoration: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              transition: 'border-color 0.2s'
             }}
+            onMouseEnter={(e) => e.target.style.borderColor = '#006bff'}
+            onMouseLeave={(e) => e.target.style.borderColor = '#d1dbe5'}
           >
             <svg width="21" height="21" viewBox="0 0 21 21">
               <path fill="#f25022" d="M0 0h10v10H0z" />

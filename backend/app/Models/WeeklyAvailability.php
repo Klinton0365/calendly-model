@@ -13,9 +13,14 @@ class WeeklyAvailability extends Model
         'end_time',
     ];
 
+    // protected $casts = [
+    //     'start_time' => 'datetime:H:i',
+    //     'end_time' => 'datetime:H:i',
+    // ];
+
     protected $casts = [
-        'start_time' => 'datetime:H:i',
-        'end_time' => 'datetime:H:i',
+        'start_time' => 'string',
+        'end_time' => 'string',
     ];
 
 }

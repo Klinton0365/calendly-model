@@ -55,24 +55,6 @@ class AuthController extends Controller
         return Socialite::driver('google')->stateless()->redirect();
     }
 
-    // public function googleCallback()
-    // {
-    //     $googleUser = Socialite::driver('google')->stateless()->user();
-
-    //     $user = User::updateOrCreate(
-    //         ['email' => $googleUser->getEmail()],
-    //         [
-    //             'name'      => $googleUser->getName(),
-    //             'google_id' => $googleUser->getId(),
-    //         ]
-    //     );
-
-    //     return response()->json([
-    //         'token' => $user->createToken('auth_token')->plainTextToken,
-    //         'user'  => $user,
-    //     ]);
-    // }
-
     public function googleCallback()
 {
     $googleUser = Socialite::driver('google')->stateless()->user();

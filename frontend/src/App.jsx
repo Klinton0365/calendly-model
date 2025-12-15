@@ -10,13 +10,25 @@ import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import Schedule from "./pages/Schedule";
 import OAuthSuccess from "./pages/OAuthSuccess";
+import Meetings from "./pages/Meeting";
 
-<Route path="/oauth-success" element={<OAuthSuccess />} />
-
+// Create a ProtectedRoute component
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
+  
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+}
 
 export default function App() {
   return (
     <Routes>
+      {/* PUBLIC ROUTES */}
+      <Route path="/" element={<Home />} />
+      <Route path="/schedule/:hostId" element={<Schedule />} />
 
       {/* AUTH ROUTES (NO SIDEBAR) */}
       <Route element={<AuthLayout />}>
@@ -27,41 +39,21 @@ export default function App() {
       {/* OAUTH CALLBACK (NO LAYOUT) */}
       <Route path="/oauth-success" element={<OAuthSuccess />} />
 
-      {/* APP ROUTES (WITH SIDEBAR) */}
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<Home />} />
+      {/* PROTECTED APP ROUTES (WITH SIDEBAR) */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/meetings" element={<Meetings />} />
         <Route path="/availability" element={<Admin />} />
-        <Route path="/schedule/:hostId" element={<Schedule />} />
       </Route>
 
       {/* FALLBACK */}
-      <Route path="*" element={<Navigate to="/login" />} />
-
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
-
-
-
-// import React from "react";
-// import { Routes, Route, Link } from "react-router-dom";
-// import Sidebar from "./components/Sidebar";
-// import Home from "./pages/Home";
-// import Schedule from "./pages/Schedule";
-// import Admin from "./pages/Admin";
-
-// export default function App() {
-//   return (
-//     <div className="app">
-//       <Sidebar />
-//       <main className="main">
-//         <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/schedule/:eventId" element={<Schedule />} />
-//           <Route path="/admin" element={<Admin />} />
-//         </Routes>
-//       </main>
-//     </div>
-//   );
-// }
